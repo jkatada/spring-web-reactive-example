@@ -1,19 +1,44 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
+<meta charset="UTF-8">
+<title></title>
 </head>
-
 <body>
-<h1>Server-Sent Events demo</h1>
 
-<div id="output"></div>
+	<h1>Server-Sent Events demo</h1>
 
+	<textarea id="chat" rows="20" cols="80" readonly="readonly"></textarea>
+	<br>
+	<input id="name" type="text" placeholder="Name">
+	<input id="message" type="text" placeholder="Message">
+	<input id="send" type="button" value="Send">
 
-<script>
-  var es = new EventSource("/sse");
-  es.addEventListener("message", function (event) {
-	  console.log(event.data);
-  })
-</script>
+	<script src="js/vendor/jquery-3.1.1.min.js"></script>
+
+	<script>
+		var es = new EventSource("/chat/connect");
+		es.addEventListener("message", function(event) {
+			console.log(event);
+			$("#chat").append("\n" + event.data);
+		});
+		
+		$("#send").on("click", function(envet) {
+			console.log($("#name").val());
+			$.ajax({
+				type: "POST",
+				url: "/chat/send",
+				contentType: "application/json",
+				data: JSON.stringify({
+					name: $("#name").val(),
+					message: $("#message").val()
+				}),
+				success: function(result) {
+					console.log("send success");
+				}
+			})
+		});
+	</script>
 
 </body>
 
