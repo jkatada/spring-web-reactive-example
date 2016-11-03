@@ -1,0 +1,20 @@
+<html>
+<head>
+</head>
+
+<body>
+<h1>Server-Sent Events demo</h1>
+
+<div id="output"></div>
+
+
+<script>
+  var es = new EventSource("/sse");
+  es.addEventListener("message", function (event) {
+	  console.log(event.data);
+  })
+</script>
+
+</body>
+
+</html>
