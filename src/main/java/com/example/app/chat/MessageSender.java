@@ -18,9 +18,7 @@ public class MessageSender {
 	}
 
 	public Mono<Void> send(Mono<Message> message) {
-		message.doOnNext(m -> topic.onNext(m)).subscribe();
-
-		return Mono.empty();
+		return message.doOnNext(m -> topic.onNext(m)).then();
 	}
 
 }

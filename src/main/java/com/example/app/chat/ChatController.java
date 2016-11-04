@@ -19,11 +19,6 @@ public class ChatController {
 	@Autowired
 	MessageSender messageSender;
 
-	@PostMapping("/send")
-	public Mono<Void> send(@RequestBody Mono<Message> message) {
-		return messageSender.send(message.log());
-	}
-
 	@GetMapping("/connect")
 	public Flux<String> connect() {
 		return messageSender.connect().map(m -> {
@@ -33,4 +28,9 @@ public class ChatController {
 		});
 	}
 
+	@PostMapping("/send")
+	public Mono<Void> send(@RequestBody Mono<Message> message) {
+		return messageSender.send(message.log());
+	}
+	
 }
