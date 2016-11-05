@@ -12,8 +12,13 @@ import reactor.core.publisher.Mono;
 public class HelloController {
 
 	@PostMapping("/hello")
-	public Mono<String> hello(@RequestBody Mono<User> user) {
-		return user.map(u -> "Hello " + u.getName() + "(" + u.getAge() + ")" + "!!");
+	public Mono<String> hello(@RequestBody User u) {
+		return Mono.just("Hello " + u.getName() + "!!");
 	}
-	
+
+	@PostMapping("/helloMono")
+	public Mono<String> hello(@RequestBody Mono<User> user) {
+		return user.map(u -> "Hello " + u.getName() + "!!");
+	}
+
 }
