@@ -1,4 +1,4 @@
-package com.example.app.chat;
+package com.example.chat;
 
 import org.springframework.stereotype.Component;
 
