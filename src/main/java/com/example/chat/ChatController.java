@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.TopicProcessor;
+import reactor.core.publisher.ReplayProcessor;
 
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
 
-	private TopicProcessor<Message> topic = TopicProcessor.share(true);
+	private ReplayProcessor<Message> topic = ReplayProcessor.create(0);
 
 	@GetMapping("/connect")
 	public Flux<String> connect() {
-		return Flux.from(topic.connect().map(m -> {
+		return topic.connect().map(m -> {
 			String dateTime = m.getDateTime()
 					.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"));
 			return dateTime + " [" + m.getName() + "]: " + m.getMessage();
-		}));
+		}).log();
 	}
 
 	@PostMapping("/send")
