@@ -20,13 +20,11 @@ public class ChatController {
 
 	@GetMapping("/connect")
 	public Flux<String> connect() {
-		return
-
-		topic.connect().map(m -> {
+		return Flux.from(topic.connect().map(m -> {
 			String dateTime = m.getDateTime()
 					.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"));
 			return dateTime + " [" + m.getName() + "]: " + m.getMessage();
-		});
+		}));
 	}
 
 	@PostMapping("/send")
