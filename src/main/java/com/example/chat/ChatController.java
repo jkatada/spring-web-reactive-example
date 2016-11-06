@@ -16,11 +16,11 @@ import reactor.core.publisher.ReplayProcessor;
 @RequestMapping("/chat")
 public class ChatController {
 
-	private ReplayProcessor<Message> topic = ReplayProcessor.create(0);
+	private ReplayProcessor<Message> processor = ReplayProcessor.create(0);
 
 	@GetMapping("/connect")
 	public Flux<String> connect() {
-		return topic.connect().map(m -> {
+		return processor.connect().map(m -> {
 			String dateTime = m.getDateTime()
 					.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"));
 			return dateTime + " [" + m.getName() + "]: " + m.getMessage();
@@ -29,7 +29,7 @@ public class ChatController {
 
 	@PostMapping("/send")
 	public Mono<Void> send(@RequestBody Mono<Message> message) {
-		return message.doOnNext(m -> topic.onNext(m)).then();
+		return message.doOnNext(m -> processor.onNext(m)).then();
 	}
 
 }
