@@ -19,8 +19,13 @@ public class FormController {
 		return Mono.just("Hello " + user.getName());
 	}
 
+	@RequestMapping("/simpleMono")
+	public Mono<String> form(Mono<User> user) {
+		return user.map(u -> "Hello " + u.getName());
+	}
+
 	@RequestMapping("/validate")
-	public Mono<String> form(@Validated User user, BindingResult bindingResult) {
+	public Mono<String> formValidate(@Validated User user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return Mono.just("Error!");
 		}
@@ -29,7 +34,7 @@ public class FormController {
 
 	// Not work!
 	@RequestMapping("/validateMonoWithBindingResult")
-	public Mono<String> form(@Validated Mono<User> user, BindingResult bindingResult) {
+	public Mono<String> formValidate(@Validated Mono<User> user, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return Mono.just("Error!");
 		}
@@ -37,7 +42,7 @@ public class FormController {
 	}
 	
 	@RequestMapping("/validateMono")
-	public Mono<String> form(@Validated Mono<User> user) {
+	public Mono<String> formValidate(@Validated Mono<User> user) {
 		return user
 				.map(u -> "Hello " + u.getName())
 				.otherwise(WebExchangeBindException.class, e -> Mono.just("Error!"));
