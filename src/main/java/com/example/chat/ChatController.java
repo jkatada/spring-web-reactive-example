@@ -22,15 +22,17 @@ public class ChatController {
 
 	@GetMapping("/connect")
 	public Flux<String> connect() {
-		return processor.connect().map(m -> {
-			String dateTime = m.getDateTime()
-					.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"));
-			return dateTime + " [" + m.getName() + "]: " + m.getMessage();
-		}).log();
+		return processor.connect().map(m -> formatMessage(m));
 	}
 
 	@PostMapping("/send")
 	public Mono<Void> send(@RequestBody Mono<Message> message) {
 		return message.doOnNext(m -> processor.onNext(m)).then();
+	}
+	
+	private String formatMessage(Message message) {
+		String dateTime = message.getDateTime()
+				.format(DateTimeFormatter.ofPattern("MM/dd HH:mm"));
+		return dateTime + " [" + message.getName() + "]: " + message.getMessage();
 	}
 }
