@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.user.User;
+import com.example.model.User;
 
 import reactor.core.publisher.Mono;
 
@@ -21,11 +21,4 @@ public class HelloController {
 		return user.map(u -> "Hello " + u.getName() + "!!");
 	}
 
-	@RequestMapping("/helloForm")
-	public Mono<String> form(User user) {
-		return Mono.just("Hello " + user.getName());
-	}
-
-
-	
 }

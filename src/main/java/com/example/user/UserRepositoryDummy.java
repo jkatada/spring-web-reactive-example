@@ -2,6 +2,8 @@ package com.example.user;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.model.User;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
