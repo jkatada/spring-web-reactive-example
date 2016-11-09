@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxProcessor;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.ReplayProcessor;
 
@@ -16,7 +17,8 @@ import reactor.core.publisher.ReplayProcessor;
 @RequestMapping("/chat")
 public class ChatController {
 
-	private ReplayProcessor<Message> processor = ReplayProcessor.create(0);
+	private FluxProcessor<Message, Message> processor = ReplayProcessor.<Message> create()
+			.serialize();
 
 	@GetMapping("/connect")
 	public Flux<String> connect() {
