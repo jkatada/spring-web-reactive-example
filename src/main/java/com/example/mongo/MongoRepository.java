@@ -17,7 +17,7 @@ public class MongoRepository {
 
 	@Autowired
 	MongoDatabase mongodb;
-	
+
 	@Autowired
 	ObjectMapper mapper;
 
@@ -33,8 +33,9 @@ public class MongoRepository {
 	}
 
 	public Flux<User> findAll() {
-		return Flux.from(mongodb.getCollection("user").find()).map(
-				d -> new User(d.getInteger("id"), d.getString("name"), d.getInteger("age")));
+		return Flux.from(mongodb.getCollection("user").find())
+				.map(d -> new User(d.getInteger("id"), d.getString("name"),
+						d.getInteger("age")));
 	}
 
 	private String toJson(User user) {
