@@ -31,7 +31,7 @@ public class HelloController {
 		return Single.fromPublisher(user.map(u -> "Hello " + u.getName() + "!!"));
 	}
 	
-	// JSONをBODYに連続で書くとFluxで複数受けれる
+	// BODYのJSONのルート要素を[]で配列にするか、BODYにJSONを連続で書くとFluxで複数受けれる
 	// 本当はHTTP streaming でつないでJSONを適宜流し込んでいくような使い方だと思われる
 	@RequestMapping("/helloFlux")
 	public Flux<String> helloFlux(@RequestBody Flux<User> user) {
