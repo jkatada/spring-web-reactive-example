@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.User;
 
+import io.reactivex.Single;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -20,5 +21,10 @@ public class HelloController {
 	public Mono<String> hello(@RequestBody Mono<User> user) {
 		return user.map(u -> "Hello " + u.getName() + "!!");
 	}
-
+	
+	// RxJava
+	@RequestMapping("/helloSingle")
+	public Single<String> helloPublisher(@RequestBody Mono<User> user) {
+		return Single.fromPublisher(user.map(u -> "Hello " + u.getName() + "!!"));
+	}
 }
