@@ -48,5 +48,4 @@ public class FormController {
 				.otherwise(WebExchangeBindException.class, e -> Mono.just("Error!"));
 	}
 
-
 }
