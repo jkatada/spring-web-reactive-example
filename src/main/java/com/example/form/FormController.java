@@ -2,6 +2,7 @@ package com.example.form;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,16 @@ public class FormController {
 	@RequestMapping("/param")
 	public Mono<String> param(@RequestParam String name) {
 		return Mono.just("Hello " + name);
+	}
+
+	@RequestMapping("/helloAnnotation")
+	public Mono<String> helloAnnotation(@ModelAttribute("user") Mono<User> user) {
+		return user.map(u -> "Hello " + u.getName());
+	}
+
+	@RequestMapping("/hello")
+	public Mono<String> hello(Mono<User> user) {
+		return user.map(u -> "Hello " + u.getName());
 	}
 
 	@RequestMapping("/validate")
