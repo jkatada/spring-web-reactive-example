@@ -3,6 +3,7 @@ package com.example.form;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.WebExchangeBindException;
 
@@ -22,6 +23,11 @@ public class FormController {
 	@RequestMapping("/simpleMono")
 	public Mono<String> form(Mono<User> user) {
 		return user.map(u -> "Hello " + u.getName());
+	}
+
+	@RequestMapping("/param")
+	public Mono<String> param(@RequestParam String name) {
+		return Mono.just("Hello " + name);
 	}
 
 	@RequestMapping("/validate")
