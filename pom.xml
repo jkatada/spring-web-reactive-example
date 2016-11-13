@@ -43,6 +43,15 @@
 			<artifactId>rxjava</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<!-- Needed only for the FreemarkerConfigurer -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-reactivestreams</artifactId>
 			<version>1.2.0</version>
