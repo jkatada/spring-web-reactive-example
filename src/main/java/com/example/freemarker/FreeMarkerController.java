@@ -22,7 +22,7 @@ public class FreeMarkerController {
 		list.add(new User(2, "name2", 20));
 		list.add(new User(3, "name3", 30));
 
-		model.addAttribute("dataSource", Flux.just(list));
+		model.addAttribute("dataSource", Flux.just(list).log());
 
 		return "freemarker/list";
 	}
