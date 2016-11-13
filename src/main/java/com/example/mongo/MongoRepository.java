@@ -25,10 +25,6 @@ public class MongoRepository {
 		this.col = db.getCollection("user");
 	}
 
-	public Mono<Void> insert(User user) {
-		return Mono.empty(col.insertOne(Document.parse(toJson(user))));
-	}
-
 	public Mono<Void> insert(Mono<User> user) {
 		return user.flatMap(u -> col.insertOne(Document.parse(toJson(u)))).then();
 	}
@@ -37,7 +33,7 @@ public class MongoRepository {
 		return Flux.from(col.find()).map(d -> new User(d.getInteger("id"),
 				d.getString("name"), d.getInteger("age")));
 	}
-
+	
 	private String toJson(User user) {
 		try {
 			return mapper.writeValueAsString(user);
@@ -45,4 +41,9 @@ public class MongoRepository {
 			throw new IllegalArgumentException(e);
 		}
 	}
+
+	public Mono<Void> insert(User user) {
+		return Mono.empty(col.insertOne(Document.parse(toJson(user))));
+	}
+	
 }
