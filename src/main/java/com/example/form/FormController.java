@@ -31,6 +31,13 @@ public class FormController {
 		return Mono.just("Hello " + name);
 	}
 
+	// Monoと通常のBeanの両方が引数にある場合は、通常のBeanを引数に取ったときと同様の動き
+	// (ReadListenerがリクエストを読み込んでからControllerのメソッドが起動される)
+	@RequestMapping("/mix")
+	public Mono<String> formMix(Mono<User> user1, User user2) {
+		return user1.map(u -> "Hello " + u.getName() + " and " + user2.getName());
+	}
+
 	@RequestMapping("/helloAnnotation")
 	public Mono<String> helloAnnotation(@ModelAttribute("user") Mono<User> user) {
 		return user.map(u -> "Hello " + u.getName());
