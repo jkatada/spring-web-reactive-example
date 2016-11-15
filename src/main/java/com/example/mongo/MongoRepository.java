@@ -2,6 +2,7 @@ package com.example.mongo;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import com.example.model.User;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
+@Profile("mongodb")
 public class MongoRepository {
 
 	private final ObjectMapper mapper;
